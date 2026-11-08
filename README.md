@@ -30,3 +30,46 @@
 </p>
 
 <hr/>
+
+
+<hr/>
+
+<h2 align="center">✦ FEATURED PROJECTS ✦</h2>
+
+<p align="center">
+  <i>Things I've built, explored and learned from.</i>
+</p>
+
+<table align="center">
+  <tr>
+    <td width="50%">
+      <h3>📊 SkillInsight</h3>
+      <p>Personal Developer Analytics & Skill Intelligence Platform.</p>
+      <p><b>React • CSS • Developer Analytics</b></p>
+      <a href="https://github.com/Rishika-star/SkillInsight">View Repository →</a>
+    </td>
+    <td width="50%">
+      <h3>💜 EmotiCore</h3>
+      <p>An emotion-aware gaming experience using facial expressions and voice analysis.</p>
+      <p><b>React • AI • Emotion Detection</b></p>
+      <a href="https://github.com/Rishika-star/EmotiCore">View Repository →</a>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>☕ Java DSA Journey</h3>
+      <p>My journey of learning Java and mastering problem-solving.</p>
+      <p><b>Java • DSA • Algorithms</b></p>
+      <a href="https://github.com/Rishika-star/Java-DSA-Journey">View Repository →</a>
+    </td>
+    <td width="50%">
+      <h3>🗄️ MySQL DBMS Journey</h3>
+      <p>SQL queries, database concepts and hands-on practice.</p>
+      <p><b>MySQL • SQL • DBMS</b></p>
+      <a href="https://github.com/Rishika-star/MySQL-DBMS-Journey">View Repository →</a>
+    </td>
+  </tr>
+</table>
+
+<hr/>
+
