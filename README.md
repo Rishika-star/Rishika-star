@@ -73,3 +73,31 @@
 
 <hr/>
 
+
+<hr/>
+
+<h2 align="center">✦ CURRENTLY LEARNING ✦</h2>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/DSA-8B7CFF?style=for-the-badge&logo=leetcode&logoColor=white"/>
+  <img src="https://img.shields.io/badge/DBMS-6FA8FF?style=for-the-badge&logo=mysql&logoColor=white"/>
+  <img src="https://img.shields.io/badge/React-C9A7FF?style=for-the-badge&logo=react&logoColor=white"/>
+</p>
+
+<br/>
+
+<h2 align="center">✦ A LITTLE REMINDER ✦</h2>
+
+<p align="center">
+  <i>"Small steps every day lead to big dreams."</i>
+  <br/>
+  <b>— Keep Learning. Keep Building. ✨</b>
+</p>
+
+<hr/>
+
+<p align="center">
+  <b>Thanks for visiting my profile! 💜</b>
+</p>
+
+
