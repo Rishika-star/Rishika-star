@@ -16,3 +16,17 @@
 </p>
 
 <hr/>
+
+<hr/>
+
+<h2 align="center">✦ MY TECH STACK ✦</h2>
+
+<p align="center">
+  <i>Tools and technologies I'm exploring and building with.</i>
+</p>
+
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=java,python,react,mysql,html,css,git,github&theme=dark" />
+</p>
+
+<hr/>
