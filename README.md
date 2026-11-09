@@ -100,4 +100,26 @@
   <b>Thanks for visiting my profile! 💜</b>
 </p>
 
+<hr/>
+
+<h2 align="center">✦ CONTRIBUTION ACTIVITY ✦</h2>
+
+<p align="center">
+  <i>Every commit tells a story of progress.</i>
+</p>
+
+<p align="center">
+  <img
+    src="https://ghchart.rshah.org/8b7cff/Rishika-star"
+    alt="Rishika's GitHub Contribution Graph"
+    width="100%"
+  />
+</p>
+
+<p align="center">
+  <sub>Consistency over perfection ✨</sub>
+</p>
+
+<hr/>
+
 
