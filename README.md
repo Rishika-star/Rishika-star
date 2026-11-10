@@ -19,7 +19,6 @@
 
 <hr/>
 
-<hr/>
 
 <h2 align="center">✦ MY TECH STACK ✦</h2>
 
@@ -34,13 +33,6 @@
 <hr/>
 
 
-<hr/>
-
-
-  
-<hr/>
-
-<hr/>
 
 <h2 align="center">✦ FEATURED PROJECTS ✦</h2>
 
@@ -77,10 +69,6 @@
 
 <hr/>
 
-
-
-
-<hr/>
 
 <h2 align="center">✦ CURRENTLY LEARNING ✦</h2>
 
