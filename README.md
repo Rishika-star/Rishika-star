@@ -145,3 +145,24 @@
 </p>
 
 <hr/>
+
+<h2 align="center">✦ LET'S CONNECT ✦</h2>
+
+<p align="center">
+  <i>Always open to learning, collaboration and new opportunities.</i>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Rishika-star">
+    <img src="https://img.shields.io/badge/GitHub-Rishika--star-171F35?style=for-the-badge&logo=github&logoColor=C9B6FF"/>
+  </a>
+</p>
+
+<p align="center">
+  <b>Building. Learning. Growing.</b>
+</p>
+
+<p align="center">
+  <sub>Made with curiosity and 💜 by Rishika</sub>
+</p>
+
