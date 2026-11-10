@@ -93,20 +93,23 @@
     <td width="33%" align="center">
       <h3>⌘ DSA</h3>
       <p>Building problem-solving skills and learning efficient algorithms.</p>
-        <img src="https://img.shields.io/badge/JAVA-171F35?style=flat-square&logo=openjdk&logoColor=91DFFF"/>
-        <img src="https://img.shields.io/badge/DSA-171F35?style=flat-square&logo=leetcode&logoColor=C9B6FF"/>
+        <p>
+             <code>JAVA</code> &nbsp; <code>DSA</code>
+        </p>
     </td>
     <td width="33%" align="center">
       <h3>▤ DBMS</h3>
       <p>Practising SQL queries, database design and data management.</p>
-         <img src="https://img.shields.io/badge/MYSQL-171F35?style=flat-square&logo=mysql&logoColor=91DFFF"/>
-        <img src="https://img.shields.io/badge/SQL-171F35?style=flat-square&logo=databricks&logoColor=C9B6FF"/>
+         <p>
+  <code>MYSQL</code> &nbsp; <code>SQL</code>
+            </p>
     </td>
     <td width="33%" align="center">
       <h3>⌘ React</h3>
       <p>Building responsive interfaces and strengthening frontend concepts.</p>
-      <img src="https://img.shields.io/badge/REACT-171F35?style=flat-square&logo=react&logoColor=91DFFF"/>
-      <img src="https://img.shields.io/badge/CSS-171F35?style=flat-square&logo=css3&logoColor=C9B6FF"/>
+      <p>
+  <code>REACT</code> &nbsp; <code>CSS</code>
+</p>
     </td>
   </tr>
 </table>
