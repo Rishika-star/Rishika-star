@@ -79,28 +79,46 @@
 
 
 
+
+<hr/>
+
 <h2 align="center">✦ CURRENTLY LEARNING ✦</h2>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/DSA-8B7CFF?style=for-the-badge&logo=leetcode&logoColor=white"/>
-  <img src="https://img.shields.io/badge/DBMS-6FA8FF?style=for-the-badge&logo=mysql&logoColor=white"/>
-  <img src="https://img.shields.io/badge/React-C9A7FF?style=for-the-badge&logo=react&logoColor=white"/>
+  <i>Growing through consistency, curiosity and practice.</i>
 </p>
 
-<br/>
+<table align="center">
+  <tr>
+    <td width="33%" align="center">
+      <h3>⌘ DSA</h3>
+      <p>Building problem-solving skills and learning efficient algorithms.</p>
+      <img src="https://img.shields.io/badge/Java-151B35?style=flat-square&logo=openjdk&logoColor=91DFFF"/>
+      <img src="https://img.shields.io/badge/Algorithms-151B35?style=flat-square&logo=leetcode&logoColor=C9B6FF"/>
+    </td>
+    <td width="33%" align="center">
+      <h3>▤ DBMS</h3>
+      <p>Practising SQL queries, database design and data management.</p>
+      <img src="https://img.shields.io/badge/MySQL-151B35?style=flat-square&logo=mysql&logoColor=91DFFF"/>
+      <img src="https://img.shields.io/badge/SQL-151B35?style=flat-square&logo=databricks&logoColor=C9B6FF"/>
+    </td>
+    <td width="33%" align="center">
+      <h3>⌘ React</h3>
+      <p>Building responsive interfaces and strengthening frontend concepts.</p>
+      <img src="https://img.shields.io/badge/React-151B35?style=flat-square&logo=react&logoColor=91DFFF"/>
+      <img src="https://img.shields.io/badge/CSS-151B35?style=flat-square&logo=css3&logoColor=C9B6FF"/>
+    </td>
+  </tr>
+</table>
+
+<hr/>
 
 <h2 align="center">✦ A LITTLE REMINDER ✦</h2>
 
 <p align="center">
   <i>"Small steps every day lead to big dreams."</i>
-  <br/>
-  <b>— Keep Learning. Keep Building. ✨</b>
-</p>
-
-<hr/>
-
-<p align="center">
-  <b>Thanks for visiting my profile! 💜</b>
+  <br/><br/>
+  <b>Keep Learning. Keep Building.</b>
 </p>
 
 <hr/>
@@ -120,9 +138,7 @@
 </p>
 
 <p align="center">
-  <sub>Consistency over perfection ✨</sub>
+  <sub>Consistency over perfection ✦</sub>
 </p>
 
 <hr/>
-
-
