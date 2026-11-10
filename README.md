@@ -40,60 +40,43 @@
   
 <hr/>
 
+<hr/>
+
 <h2 align="center">✦ FEATURED PROJECTS ✦</h2>
 
 <p align="center">
-  <i>Ideas turned into code, experiments turned into experience.</i>
+  <i>Ideas turned into code. Experiences turned into growth.</i>
 </p>
 
 <table align="center">
   <tr>
-    <td width="50%" valign="top">
-      <h3>01 · 📊 SkillInsight</h3>
-      <p>A Developer Intelligence Platform that analyses coding activity and tracks problem-solving growth across platforms.</p>
-      <p><b>Tech Stack</b></p>
-      <p>
-        <img src="https://img.shields.io/badge/React-151B35?style=flat-square&logo=react&logoColor=91DFFF"/>
-        <img src="https://img.shields.io/badge/CSS-151B35?style=flat-square&logo=css3&logoColor=91DFFF"/>
-      </p>
-      <a href="https://github.com/Rishika-star/SkillInsight">↗ Explore Project</a>
+    <td width="50%" align="center">
+      <a href="https://github.com/Rishika-star/SkillInsight">
+        <img src="assets/projects/skillinsight.png" width="100%" alt="SkillInsight Project"/>
+      </a>
     </td>
-    <td width="50%" valign="top">
-      <h3>02 · 💜 EmotiCore</h3>
-      <p>An emotion-aware gaming experience exploring facial expressions and voice-based emotion analysis.</p>
-      <p><b>Tech Stack</b></p>
-      <p>
-        <img src="https://img.shields.io/badge/React-151B35?style=flat-square&logo=react&logoColor=91DFFF"/>
-        <img src="https://img.shields.io/badge/AI-151B35?style=flat-square&logo=googlecloud&logoColor=C9B6FF"/>
-      </p>
-      <a href="https://github.com/Rishika-star/EmotiCore">↗ Explore Project</a>
+    <td width="50%" align="center">
+      <a href="https://github.com/Rishika-star/EmotiCore">
+        <img src="assets/projects/emoticore.png" width="100%" alt="EmotiCore Project"/>
+      </a>
     </td>
   </tr>
   <tr>
-    <td width="50%" valign="top">
-      <h3>03 · ☕ Java DSA Journey</h3>
-      <p>A hands-on learning journey covering Java fundamentals, data structures, algorithms and problem-solving.</p>
-      <p><b>Tech Stack</b></p>
-      <p>
-        <img src="https://img.shields.io/badge/Java-151B35?style=flat-square&logo=openjdk&logoColor=E4E9FF"/>
-        <img src="https://img.shields.io/badge/DSA-151B35?style=flat-square&logo=leetcode&logoColor=C9B6FF"/>
-      </p>
-      <a href="https://github.com/Rishika-star/Java-DSA-Journey">↗ Explore Repository</a>
+    <td width="50%" align="center">
+      <a href="https://github.com/Rishika-star/Java-DSA-Journey">
+        <img src="assets/projects/java-dsa.png" width="100%" alt="Java DSA Journey"/>
+      </a>
     </td>
-    <td width="50%" valign="top">
-      <h3>04 · 🗄️ MySQL DBMS Journey</h3>
-      <p>SQL practice repository covering database operations, queries, views and database concepts.</p>
-      <p><b>Tech Stack</b></p>
-      <p>
-        <img src="https://img.shields.io/badge/MySQL-151B35?style=flat-square&logo=mysql&logoColor=91DFFF"/>
-        <img src="https://img.shields.io/badge/SQL-151B35?style=flat-square&logo=databricks&logoColor=C9B6FF"/>
-      </p>
-      <a href="https://github.com/Rishika-star/MySQL-DBMS-Journey">↗ Explore Repository</a>
+    <td width="50%" align="center">
+      <a href="https://github.com/Rishika-star/MySQL-DBMS-Journey">
+        <img src="assets/projects/mysql.png" width="100%" alt="MySQL DBMS Journey"/>
+      </a>
     </td>
   </tr>
 </table>
 
 <hr/>
+
 
 
 <h2 align="center">✦ CURRENTLY LEARNING ✦</h2>
