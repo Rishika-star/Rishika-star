@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Rishika-star/Rishika-star/main/assets/hero.png" width="100%" alt="Rishika Developer Banner"/>
+ <img src="assets/projects/hero.png" width="100%" alt="GitHub Profile Banner"/>
 </p>
 
 <hr/>
