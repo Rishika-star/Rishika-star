@@ -121,9 +121,8 @@
 </p>
 
 <!-- CONTRIBUTION_YEARS_START -->
-<p align="center">
-  <img src="profile/contributions.svg" width="100%" alt="Yearly Contribution Graph"/>
-</p>
+<p align="center"><a href="profile/contributions-2026.svg">2026</a></p>
+<p align="center"><img src="profile/contributions.svg" width="100%" alt="Yearly Contribution Graph"/></p>
 <!-- CONTRIBUTION_YEARS_END -->
 
 <p align="center">
