@@ -109,13 +109,20 @@ def create_year_svg(year, days):
     weeks = []
     current = first_day
 
-    while current <= last_day:
+    while current <= end:
         week = []
+
         for _ in range(7):
-            date_string = current.isoformat()
-            week.append((date_string, days.get(date_string, 0)))
-            current = current.fromordinal(current.toordinal() + 1)
-        weeks.append(week)
+            if start <= current <= end:
+                date_string = current.isoformat()
+                week.append((date_string, days.get(date_string, 0)))
+
+            current = current.fromordinal(
+                current.toordinal() + 1
+        )
+
+        if week:
+            weeks.append(week)
 
     width = left + len(weeks) * step + 10
     height = top + 7 * step + 15
