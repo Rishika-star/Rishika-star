@@ -111,6 +111,30 @@ for x, week in enumerate(weeks):
             f'</rect>'
         )
 
+month_labels = []
+
+for x, week in enumerate(weeks):
+    month_start = next(
+        (date_string for date_string, _ in week
+         if date_string[8:10] == "01"),
+        None
+    )
+
+    if x == 0:
+        month_start = week[0][0]
+
+    if month_start:
+        month_name = datetime.strptime(
+            month_start, "%Y-%m-%d"
+        ).strftime("%b")
+
+        month_labels.append(
+            f'<text x="{left + x * step}" y="12" '
+            f'fill="#E4E9FF" font-size="12" '
+            f'font-family="Arial, sans-serif">{month_name}</text>'
+        )
+
+
 svg = f'''<svg xmlns="http://www.w3.org/2000/svg"
 width="{width}" height="{height}" viewBox="0 0 {width} {height}">
 <g font-family="Arial, sans-serif" font-size="10" fill="#C9B6FF">
