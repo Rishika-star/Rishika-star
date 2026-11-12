@@ -149,8 +149,15 @@ def create_year_svg(year, days):
         )
 
     rectangles = []
+
     for x, week in enumerate(weeks):
-        for y, (date_string, count) in enumerate(week):
+        for date_string, count in week:
+            weekday = datetime.strptime(
+                date_string, "%Y-%m-%d"
+            ).weekday()
+
+            y = (weekday + 1) % 7
+
             rectangles.append(
                 f'<rect x="{left + x * step}" '
                 f'y="{top + y * step}" '
