@@ -146,6 +146,7 @@ width="{width}" height="{height}" viewBox="0 0 {width} {height}">
 <text x="0" y="106">Fri</text>
 <text x="0" y="121">Sat</text>
 </g>
+{''.join(month_labels)}
 {''.join(rectangles)}
 </svg>'''
 
