@@ -125,7 +125,7 @@ def create_year_svg(year, days):
     month_labels = []
     for x, week in enumerate(weeks):
         for date_string, count in week:
-            if date_string[8:10] == "01":
+            if date_string[8:10] == "01" and date_string[:4] == str(year):
                 month = datetime.strptime(
                     date_string, "%Y-%m-%d"
                 ).strftime("%b")
