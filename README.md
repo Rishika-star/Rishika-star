@@ -122,7 +122,7 @@
 
 <p align="center">
   <img
-    src="https://ghchart.rshah.org/8b7cff/Rishika-star"
+    src="profile/contributions.svg"
     alt="Rishika's GitHub Contribution Graph"
     width="100%"
   />
