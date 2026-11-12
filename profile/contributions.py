@@ -98,7 +98,7 @@ def create_year_svg(year, days):
     )
 
     # End the calendar on Saturday.
-   last_day = end
+    last_day = end
 
     cell = 13
     gap = 4
