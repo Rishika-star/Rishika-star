@@ -120,13 +120,11 @@
   <i>Every commit tells a story of progress.</i>
 </p>
 
+<!-- CONTRIBUTION_YEARS_START -->
 <p align="center">
-  <img
-    src="profile/contributions.svg"
-    alt="Rishika's GitHub Contribution Graph"
-    width="100%"
-  />
+  <img src="profile/contributions.svg" width="100%" alt="Yearly Contribution Graph"/>
 </p>
+<!-- CONTRIBUTION_YEARS_END -->
 
 <p align="center">
   <sub>Consistency over perfection ✦</sub>
