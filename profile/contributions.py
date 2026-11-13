@@ -205,12 +205,12 @@ def create_year_svg(year, days):
         )
 
     # Moon and clouds
-    moon_x = width - 88
+    moon_x = width - 175
 
     moon = f'''
-    <circle cx="{moon_x}" cy="57" r="55"
+    <circle cx="{moon_x}" cy="57" r="62"
       fill="url(#moonGlow)"/>
-    <circle cx="{moon_x}" cy="57" r="23"
+    <circle cx="{moon_x}" cy="57" r="29"
       fill="#F0E3FF" filter="url(#glow)"/>
     <circle cx="{moon_x-8}" cy="49" r="4"
       fill="#D8C2F4" opacity="0.5"/>
@@ -260,19 +260,28 @@ def create_year_svg(year, days):
         )
 
     # Small decorative branch on upper-right
-    branches.append(f'''
-    <g fill="none" stroke="#9270B7"
-      stroke-width="2">
-      <path d="M{width-190} 100 Q{width-145} 65
-      {width-120} 15"/>
-      <path d="M{width-150} 65 Q{width-110} 70
-      {width-85} 35"/>
-    </g>
-    ''')
+        # Elegant upper-right floral branch
+        branches.append(f'''
+        <g fill="none" stroke="#9270B7"
+          stroke-width="2.5" stroke-linecap="round">
+          <path d="M{width-390} 105
+          Q{width-345} 75 {width-315} 18"/>
+          <path d="M{width-350} 73
+          Q{width-320} 83 {width-285} 48"/>
+          <path d="M{width-330} 47
+          Q{width-300} 20 {width-270} 16"/>
+        </g>
+        ''')
 
-    branches.append(
-        flower(width-120, 29, 9, "#DCA4FF", "#FFF0D8")
-    )
+        for x, y, s in [
+            (width-315, 27, 10),
+            (width-285, 48, 8),
+            (width-270, 15, 9),
+            (width-350, 75, 7)
+        ]:
+            branches.append(
+                flower(x, y, s, "#DDA6FF", "#FFF0D8")
+            )
 
     # Contribution panel
     panel = f'''
