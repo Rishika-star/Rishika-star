@@ -399,23 +399,181 @@ def create_year_svg(year, days):
       fill="#E4CFFF">More</text>
     '''
 
-    # Layered meadow hills
+   
+    # Dreamy layered flower meadow
     meadow = f'''
-    <path d="M0 410 Q150 350 300 405
-    T600 393 T900 400 T{width} 385
+    <path d="M0 405 Q130 365 270 405
+    T540 395 T820 400 T{width} 385
     L{width} 490 L0 490 Z"
-    fill="#211A3C"/>
+    fill="#211832"/>
 
-    <path d="M0 438 Q180 375 340 430
-    T680 423 T{width} 420
+    <path d="M0 435 Q160 390 330 430
+    T680 420 T{width} 415
     L{width} 490 L0 490 Z"
-    fill="#302249"/>
+    fill="#302044"/>
 
-    <path d="M0 465 Q200 420 420 458
-    T800 451 T{width} 455
+    <path d="M0 463 Q180 425 390 458
+    T790 450 T{width} 445
     L{width} 490 L0 490 Z"
-    fill="#44305E"/>
+    fill="#46305E"/>
+
+    <path d="M0 480 Q250 450 480 480
+    T{width} 468 L{width} 490 L0 490 Z"
+    fill="#594071"/>
     '''
+
+    # Decorative rocks
+    rocks = []
+
+    for x, y, rx, ry in [
+        (22, 465, 25, 12),
+        (95, 477, 15, 8),
+        (width-145, 474, 22, 11),
+        (width-28, 465, 30, 15),
+        (width-105, 483, 18, 8)
+    ]:
+        rocks.append(
+            f'<ellipse cx="{x}" cy="{y}" '
+            f'rx="{rx}" ry="{ry}" fill="#75618D" '
+            f'stroke="#A68BBC" stroke-width="1" '
+            f'opacity="0.85"/>'
+        )
+
+    # Flower stems, leaves and blossoms
+    plants = []
+
+    for i in range(65):
+        x = (i * 47 + 15) % width
+        y = 472 - (i % 4) * 5
+
+        # Keep lantern area clear
+        if width - 120 < x < width - 35:
+            continue
+
+        stem_height = 18 + (i % 5) * 6
+        flower_y = y - stem_height
+
+        plants.append(
+            f'<path d="M{x} {y} Q{x-5} {y-15} '
+            f'{x} {flower_y}" '
+            f'fill="none" stroke="#9D83B8" '
+            f'stroke-width="1.7"/>'
+        )
+
+        # Leaves on both sides
+        plants.append(
+            f'<path d="M{x} {y-9} q-13 -13 -17 -3 '
+            f'q7 10 17 3" fill="#637B78" '
+            f'stroke="#9DAB91" stroke-width="0.7"/>'
+        )
+
+        plants.append(
+            f'<path d="M{x} {y-17} q12 -13 17 -3 '
+            f'q-7 10 -17 3" fill="#758B83" '
+            f'stroke="#B3B69D" stroke-width="0.7"/>'
+        )
+
+        # Flower variations
+        if i % 2 == 0:
+            plants.append(
+                flower(
+                    x, flower_y, 5 + i % 4,
+                    "#DDA4F2", "#FFF0D5", 0.95
+                )
+            )
+        elif i % 3 == 0:
+            plants.append(
+                flower(
+                    x, flower_y, 4,
+                    "#F2C5E9", "#FFE9B8", 0.9
+                )
+            )
+
+    # Taller lavender flower stalks
+    for x, y in [
+        (35, 430), (110, 445), (width//3, 430),
+        (width//2, 438), (width-230, 432),
+        (width-170, 440)
+    ]:
+        plants.append(
+            f'<path d="M{x} 475 Q{x-8} 450 {x} {y}" '
+            f'fill="none" stroke="#A58AC5" '
+            f'stroke-width="2"/>'
+        )
+
+        for j in range(5):
+            plants.append(
+                f'<ellipse cx="{x + (j%2)*5}" '
+                f'cy="{y+j*7}" rx="3" ry="6" '
+                f'fill="#C38BEA" opacity="0.9"/>'
+            )
+
+    # Glowing fireflies
+    fireflies = []
+
+    for i in range(24):
+        x = (i * 67 + 35) % width
+        y = 365 + (i % 4) * 15
+
+        fireflies.append(
+            f'<circle cx="{x}" cy="{y}" r="6" '
+            f'fill="#FFD58D" opacity="0.18" '
+            f'filter="url(#softGlow)"/>'
+        )
+
+        fireflies.append(
+            f'<circle cx="{x}" cy="{y}" r="2" '
+            f'fill="#FFE4A6" filter="url(#glow)"/>'
+        )
+
+    # Warm golden decorative lantern
+    lx = width - 76
+
+    lantern = f'''
+    <circle cx="{lx}" cy="421" r="58"
+      fill="url(#lanternGlow)"
+      filter="url(#softGlow)"/>
+
+    <g transform="translate({lx},424)" filter="url(#glow)">
+
+      <!-- Top handle -->
+      <path d="M-7 -42 Q0 -61 7 -42"
+        fill="none" stroke="#E8C18B" stroke-width="2.5"/>
+
+      <!-- Lantern roof -->
+      <path d="M-13 -38 L13 -38 L19 -29
+        L-19 -29 Z"
+        fill="#59405D" stroke="#F2C88E"
+        stroke-width="2"/>
+
+      <!-- Glass body -->
+      <path d="M-13 -28 L13 -28 L16 12
+        L-16 12 Z"
+        fill="#5A3B4D" stroke="#F4CE93"
+        stroke-width="2"/>
+
+      <!-- Golden glass light -->
+      <path d="M-8 -23 L8 -23 L10 7
+        L-10 7 Z"
+        fill="#FFD98F"/>
+
+      <path d="M0 -18 Q-10 -5 0 4
+        Q10 -5 0 -18 Z"
+        fill="#FFF2C6"/>
+
+      <!-- Base -->
+      <path d="M-18 13 L18 13 L22 20
+        L-22 20 Z"
+        fill="#72513F" stroke="#EBC18D"
+        stroke-width="2"/>
+
+      <!-- Decorative bottom -->
+      <path d="M-10 20 L10 20 L7 25
+        L-7 25 Z"
+        fill="#A77A57"/>
+    </g>
+    '''
+
 
     # Meadow plants and fireflies
     plants = []
@@ -502,11 +660,12 @@ def create_year_svg(year, days):
 
       {legend}
       {meadow}
-      {''.join(fireflies)}
+      {''.join(rocks)}
       {''.join(plants)}
+      {''.join(fireflies)}
       {lantern}
 
-    </svg>'''
+      </svg>'''
 
 
 
