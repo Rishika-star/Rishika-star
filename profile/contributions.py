@@ -88,23 +88,20 @@ def fetch_year(year):
     return days, calendar["totalContributions"]
 
 
+
 def create_year_svg(year, days):
     start = date(year, 1, 1)
     end = date(year, 12, 31)
 
-    # Start the calendar on Sunday.
     first_day = start.fromordinal(
         start.toordinal() - (start.weekday() + 1) % 7
     )
 
-    # End the calendar on Saturday.
-    last_day = end
-
-    cell = 13
-    gap = 4
+    cell = 16
+    gap = 5
     step = cell + gap
-    left = 38
-    top = 35
+    left = 42
+    top = 65
 
     weeks = []
     current = first_day
@@ -117,38 +114,79 @@ def create_year_svg(year, days):
                 date_string = current.isoformat()
                 week.append((date_string, days.get(date_string, 0)))
 
-            current = current.fromordinal(
-                current.toordinal() + 1
-        )
+            current = current.fromordinal(current.toordinal() + 1)
 
         if week:
             weeks.append(week)
 
-    width = left + len(weeks) * step + 10
-    height = top + 7 * step + 15
+    width = left + len(weeks) * step + 20
+    height = top + 7 * step + 135
 
+    # SVG definitions and background
+    background = f'''
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#10152D"/>
+        <stop offset="100%" stop-color="#21183D"/>
+      </linearGradient>
+
+      <radialGradient id="moonGlow">
+        <stop offset="0%" stop-color="#E6D8FF" stop-opacity="0.7"/>
+        <stop offset="100%" stop-color="#B69AFF" stop-opacity="0"/>
+      </radialGradient>
+
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+
+    <rect width="100%" height="100%" rx="18" fill="url(#sky)"/>
+    '''
+
+    # Moon and stars
+    moon = '''
+    <circle cx="90%" cy="55" r="42" fill="url(#moonGlow)"/>
+    <circle cx="90%" cy="55" r="17" fill="#E9DCFF"/>
+    '''
+
+    stars = []
+    for i in range(24):
+        x = (i * 79 + 31) % width
+        y = (i * 37 + 13) % 55
+        stars.append(
+            f'<circle cx="{x}" cy="{y}" r="1.5" '
+            f'fill="#D9C8FF" opacity="0.7"/>'
+        )
+
+    # Month labels
     month_labels = []
     for x, week in enumerate(weeks):
         for date_string, count in week:
-            if date_string[8:10] == "01" and date_string[:4] == str(year):
+            if date_string[8:10] == "01":
                 month = datetime.strptime(
                     date_string, "%Y-%m-%d"
                 ).strftime("%b")
 
                 month_labels.append(
-                    f'<text x="{left + x * step}" y="20" '
-                    f'font-size="12" fill="#E4E9FF">{month}</text>'
+                    f'<text x="{left + x * step}" y="48" '
+                    f'font-size="12" fill="#D9C8FF">{month}</text>'
                 )
                 break
 
+    # Weekday labels
     day_labels = []
     for index, name in [(1, "Mon"), (3, "Wed"), (5, "Fri")]:
         day_labels.append(
-            f'<text x="0" y="{top + index * step + 11}" '
-            f'font-size="11" fill="#C9B6FF">{name}</text>'
+            f'<text x="4" y="{top + index * step + 11}" '
+            f'font-size="10" fill="#C9B6FF">{name}</text>'
         )
 
-    rectangles = []
+    # Flower contribution cells
+    flowers = []
 
     for x, week in enumerate(weeks):
         for date_string, count in week:
@@ -157,24 +195,95 @@ def create_year_svg(year, days):
             ).weekday()
 
             y = (weekday + 1) % 7
+            cx = left + x * step + cell / 2
+            cy = top + y * step + cell / 2
 
-            rectangles.append(
-                f'<rect x="{left + x * step}" '
-                f'y="{top + y * step}" '
-                f'width="{cell}" height="{cell}" '
-                f'rx="3" ry="3" fill="{get_color(count)}">'
-                f'<title>{date_string}: {count} contributions</title>'
-                f'</rect>'
+            if count == 0:
+                petal = "#493B67"
+                center = "#79659B"
+                opacity = 0.55
+            elif count <= 2:
+                petal = "#9C7ACB"
+                center = "#D8B7FF"
+                opacity = 0.85
+            elif count <= 5:
+                petal = "#D58CCF"
+                center = "#FFE0F4"
+                opacity = 1
+            else:
+                petal = "#E9B1E5"
+                center = "#FFF0C9"
+                opacity = 1
+
+            petals = []
+            for angle in range(0, 360, 60):
+                petals.append(
+                    f'<ellipse cx="{cx}" cy="{cy - 4}" '
+                    f'rx="2.5" ry="4" fill="{petal}" '
+                    f'transform="rotate({angle} {cx} {cy})"/>'
+                )
+
+            flowers.append(
+                f'<g opacity="{opacity}" filter="url(#glow)">'
+                + ''.join(petals)
+                + f'<circle cx="{cx}" cy="{cy}" r="2.1" '
+                f'fill="{center}"/>'
+                + f'<title>{date_string}: {count} contributions</title>'
+                + '</g>'
             )
+
+    # Decorative meadow
+    meadow = f'''
+    <path d="M0 {height-75} Q{width/3} {height-115}
+    {width/2} {height-72} T{width} {height-90}
+    L{width} {height} L0 {height} Z"
+    fill="#24203F"/>
+
+    <path d="M0 {height-40} Q{width/2} {height-85}
+    {width} {height-45} L{width} {height}
+    L0 {height} Z" fill="#30244A"/>
+    '''
+
+    grass = []
+    for i in range(38):
+        x = (i * 53 + 19) % width
+        y = height - 18 - (i % 5) * 5
+
+        grass.append(
+            f'<path d="M{x} {y} q-7 -18 -4 -25 '
+            f'M{x} {y} q7 -15 11 -21" '
+            f'fill="none" stroke="#8B76A9" '
+            f'stroke-width="1.5" opacity="0.8"/>'
+        )
+
+    # Decorative lantern
+    lantern = f'''
+    <g transform="translate({width-55},{height-62})" filter="url(#glow)">
+      <path d="M-7 -20 L7 -20 L10 7 L-10 7 Z"
+      fill="#C99A72" stroke="#E9C6A1" stroke-width="1.5"/>
+      <path d="M-5 -16 L5 -16 L6 3 L-6 3 Z"
+      fill="#FFD99A"/>
+      <path d="M-5 -22 Q0 -34 5 -22"
+      fill="none" stroke="#E9C6A1" stroke-width="2"/>
+      <path d="M-13 8 L13 8" stroke="#E9C6A1" stroke-width="2"/>
+    </g>
+    '''
 
     return f'''<svg xmlns="http://www.w3.org/2000/svg"
     width="100%" height="{height}" viewBox="0 0 {width} {height}">
+    {background}
+    {moon}
+    {''.join(stars)}
     <g font-family="Arial, sans-serif">
-    {''.join(month_labels)}
-    {''.join(day_labels)}
-    {''.join(rectangles)}
+      {''.join(month_labels)}
+      {''.join(day_labels)}
+      {''.join(flowers)}
     </g>
+    {meadow}
+    {''.join(grass)}
+    {lantern}
     </svg>'''
+
 
 
 os.makedirs("profile", exist_ok=True)
