@@ -1,95 +1,4 @@
 
-import os
-import json
-import urllib.request
-from datetime import date, datetime, timezone
-
-TOKEN = os.environ["GH_TOKEN"]
-USERNAME = os.environ["GITHUB_USERNAME"]
-
-START_YEAR = 2026
-CURRENT_YEAR = datetime.now(timezone.utc).year
-TODAY = datetime.now(timezone.utc).date()
-
-QUERY = """
-query($username: String!, $from: DateTime!, $to: DateTime!) {
-  user(login: $username) {
-    contributionsCollection(from: $from, to: $to) {
-      contributionCalendar {
-        totalContributions
-        weeks {
-          contributionDays {
-            date
-            contributionCount
-          }
-        }
-      }
-    }
-  }
-}
-"""
-
-COLORS = ["#151B35", "#30275A", "#59449A", "#927DCC", "#B69AFF"]
-
-def get_color(count):
-    if count == 0:
-        return COLORS[0]
-    if count <= 2:
-        return COLORS[1]
-    if count <= 5:
-        return COLORS[2]
-    if count <= 9:
-        return COLORS[3]
-    return COLORS[4]
-
-
-def fetch_year(year):
-    start = date(year, 1, 1)
-    end = date(year, 12, 31)
-
-    if year == CURRENT_YEAR:
-        end = TODAY
-
-    payload = {
-        "query": QUERY,
-        "variables": {
-            "username": USERNAME,
-            "from": start.isoformat() + "T00:00:00Z",
-            "to": end.isoformat() + "T23:59:59Z"
-        }
-    }
-
-    request = urllib.request.Request(
-        "https://api.github.com/graphql",
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {TOKEN}",
-            "Content-Type": "application/json"
-        }
-    )
-
-    with urllib.request.urlopen(request) as response:
-        result = json.loads(response.read().decode("utf-8"))
-
-    if "errors" in result:
-        raise Exception(result["errors"])
-
-    user = result.get("data", {}).get("user")
-    if user is None:
-        raise Exception("GitHub user not found: " + USERNAME)
-
-    calendar = user["contributionsCollection"]["contributionCalendar"]
-
-    days = {}
-    for week in calendar["weeks"]:
-        for day in week["contributionDays"]:
-            days[day["date"]] = day["contributionCount"]
-
-    return days, calendar["totalContributions"]
-
-
-
-
 def create_year_svg(year, days):
     start = date(year, 1, 1)
     end = date(year, 12, 31)
@@ -124,7 +33,7 @@ def create_year_svg(year, days):
     height = 490
     total = sum(days.values())
 
-    # Reusable flower drawing
+    # Flower drawing helper
     def flower(cx, cy, scale, petal, center, opacity=1):
         petals = []
 
@@ -144,7 +53,7 @@ def create_year_svg(year, days):
             + '</g>'
         )
 
-    # Background and glow effects
+    # Background and lighting
     background = f'''
     <defs>
       <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
@@ -204,40 +113,39 @@ def create_year_svg(year, days):
             f'fill="#E8D6FF" opacity="0.8"/>'
         )
 
-    # Moon and clouds
+    # Moon
     moon_x = width - 175
 
     moon = f'''
     <circle cx="{moon_x}" cy="57" r="62"
       fill="url(#moonGlow)"/>
+
     <circle cx="{moon_x}" cy="57" r="29"
       fill="#F0E3FF" filter="url(#glow)"/>
+
     <circle cx="{moon_x-8}" cy="49" r="4"
       fill="#D8C2F4" opacity="0.5"/>
+
     <circle cx="{moon_x+8}" cy="65" r="5"
       fill="#D8C2F4" opacity="0.4"/>
-
-    <path d="M{moon_x-70} 76 Q{moon_x-45} 53
-    {moon_x-20} 73 Q{moon_x+5} 60
-    {moon_x+32} 77 L{moon_x+40} 86
-    L{moon_x-65} 86 Z"
-    fill="#554078" opacity="0.8"/>
     '''
 
-    # Decorative blossom branches
+    # Floral branches
     branches = []
 
     branches.append(f'''
     <g fill="none" stroke="#70528F"
        stroke-width="3" stroke-linecap="round">
+
       <path d="M-15 115 Q25 82 45 30 Q65 5 110 -8"/>
       <path d="M15 72 Q58 68 92 34"/>
       <path d="M36 46 Q20 22 18 5"/>
       <path d="M53 29 Q80 10 125 14"/>
+
     </g>
     ''')
 
-    branches.append(f'''
+    branches.append('''
     <g fill="#A78BC5" opacity="0.9">
       <ellipse cx="40" cy="63" rx="5" ry="12"
         transform="rotate(-45 40 63)"/>
@@ -251,45 +159,51 @@ def create_year_svg(year, days):
     ''')
 
     for x, y, s in [
-        (22, 25, 10), (58, 13, 9),
-        (92, 35, 8), (120, 10, 7),
-        (8, 83, 8), (43, 52, 7)
+        (22, 25, 10),
+        (58, 13, 9),
+        (92, 35, 8),
+        (120, 10, 7),
+        (8, 83, 8),
+        (43, 52, 7)
     ]:
         branches.append(
             flower(x, y, s, "#DDA6FF", "#FFF0D8")
         )
 
-    # Small decorative branch on upper-right
-        # Elegant upper-right floral branch
-        branches.append(f'''
-        <g fill="none" stroke="#9270B7"
-          stroke-width="2.5" stroke-linecap="round">
-          <path d="M{width-390} 105
-          Q{width-345} 75 {width-315} 18"/>
-          <path d="M{width-350} 73
-          Q{width-320} 83 {width-285} 48"/>
-          <path d="M{width-330} 47
-          Q{width-300} 20 {width-270} 16"/>
-        </g>
-        ''')
+    # Upper-right flower branch
+    branches.append(f'''
+    <g fill="none" stroke="#9270B7"
+      stroke-width="2.5" stroke-linecap="round">
 
-        for x, y, s in [
-            (width-315, 27, 10),
-            (width-285, 48, 8),
-            (width-270, 15, 9),
-            (width-350, 75, 7)
-        ]:
-            branches.append(
-                flower(x, y, s, "#DDA6FF", "#FFF0D8")
-            )
+      <path d="M{width-390} 105
+      Q{width-345} 75 {width-315} 18"/>
 
-    # Contribution panel
+      <path d="M{width-350} 73
+      Q{width-320} 83 {width-285} 48"/>
+
+      <path d="M{width-330} 47
+      Q{width-300} 20 {width-270} 16"/>
+
+    </g>
+    ''')
+
+    for x, y, s in [
+        (width-315, 27, 10),
+        (width-285, 48, 8),
+        (width-270, 15, 9),
+        (width-350, 75, 7)
+    ]:
+        branches.append(
+            flower(x, y, s, "#DDA6FF", "#FFF0D8")
+        )
+
+    # Glass contribution panel
     panel = f'''
     <rect x="18" y="112" width="{width-36}"
       height="235" rx="16"
       fill="url(#panel)"
-      stroke="url(#borderGlow)" stroke-width="1.5"
-      filter="url(#glow)"/>
+      stroke="url(#borderGlow)"
+      stroke-width="1.5"/>
 
     <rect x="20" y="114" width="{width-40}"
       height="231" rx="15"
@@ -312,6 +226,7 @@ def create_year_svg(year, days):
     <rect x="{width-115}" y="36" width="88"
       height="35" rx="9"
       fill="#51356F" stroke="#BD8BFF"/>
+
     <text x="{width-71}" y="59"
       text-anchor="middle" font-size="16"
       fill="#F5E5FF">{year}</text>
@@ -385,10 +300,11 @@ def create_year_svg(year, days):
                 + '</g>'
             )
 
-    # Legend
+    # Contribution legend
     legend = '''
     <text x="35" y="328" font-size="12"
       fill="#E4CFFF">✧ Contribution activity</text>
+
     <text x="700" y="328" font-size="12"
       fill="#E4CFFF">Less</text>
     '''
@@ -408,8 +324,7 @@ def create_year_svg(year, days):
       fill="#E4CFFF">More</text>
     '''
 
-   
-    # Dreamy layered flower meadow
+    # Layered meadow
     meadow = f'''
     <path d="M0 405 Q130 365 270 405
     T540 395 T820 400 T{width} 385
@@ -427,7 +342,8 @@ def create_year_svg(year, days):
     fill="#46305E"/>
 
     <path d="M0 480 Q250 450 480 480
-    T{width} 468 L{width} 490 L0 490 Z"
+    T790 468 T{width} 470
+    L{width} 490 L0 490 Z"
     fill="#594071"/>
     '''
 
@@ -448,57 +364,34 @@ def create_year_svg(year, days):
             f'opacity="0.85"/>'
         )
 
-    # Flower stems, leaves and blossoms
+    # Meadow plants
     plants = []
 
-    for i in range(65):
+    for i in range(55):
         x = (i * 47 + 15) % width
-        y = 472 - (i % 4) * 5
+        y = 468 - (i % 4) * 7
+        size = 5 + (i % 4)
 
-        # Keep lantern area clear
+        # Keep the lantern area clear
         if width - 120 < x < width - 35:
             continue
 
-        stem_height = 18 + (i % 5) * 6
-        flower_y = y - stem_height
-
         plants.append(
-            f'<path d="M{x} {y} Q{x-5} {y-15} '
-            f'{x} {flower_y}" '
-            f'fill="none" stroke="#9D83B8" '
-            f'stroke-width="1.7"/>'
+            f'<path d="M{x} {y} q-9 -20 -4 -30 '
+            f'M{x} {y} q8 -17 13 -24" '
+            f'fill="none" stroke="#9C83B8" '
+            f'stroke-width="1.5" opacity="0.8"/>'
         )
 
-        # Leaves on both sides
-        plants.append(
-            f'<path d="M{x} {y-9} q-13 -13 -17 -3 '
-            f'q7 10 17 3" fill="#637B78" '
-            f'stroke="#9DAB91" stroke-width="0.7"/>'
-        )
-
-        plants.append(
-            f'<path d="M{x} {y-17} q12 -13 17 -3 '
-            f'q-7 10 -17 3" fill="#758B83" '
-            f'stroke="#B3B69D" stroke-width="0.7"/>'
-        )
-
-        # Flower variations
-        if i % 2 == 0:
+        if i % 3 == 0:
             plants.append(
                 flower(
-                    x, flower_y, 5 + i % 4,
-                    "#DDA4F2", "#FFF0D5", 0.95
-                )
-            )
-        elif i % 3 == 0:
-            plants.append(
-                flower(
-                    x, flower_y, 4,
-                    "#F2C5E9", "#FFE9B8", 0.9
+                    x, y-23, size,
+                    "#D79BEF", "#FFF0D5", 0.9
                 )
             )
 
-    # Taller lavender flower stalks
+    # Tall lavender flowers
     for x, y in [
         (35, 430), (110, 445), (width//3, 430),
         (width//2, 438), (width-230, 432),
@@ -517,51 +410,47 @@ def create_year_svg(year, days):
                 f'fill="#C38BEA" opacity="0.9"/>'
             )
 
-    # Glowing fireflies
+    # Fireflies
     fireflies = []
 
-    for i in range(24):
+    for i in range(18):
         x = (i * 67 + 35) % width
-        y = 365 + (i % 4) * 15
+        y = 375 + (i % 3) * 17
 
         fireflies.append(
-            f'<circle cx="{x}" cy="{y}" r="6" '
+            f'<circle cx="{x}" cy="{y}" r="7" '
             f'fill="#FFD58D" opacity="0.18" '
             f'filter="url(#softGlow)"/>'
         )
 
         fireflies.append(
-            f'<circle cx="{x}" cy="{y}" r="2" '
+            f'<circle cx="{x}" cy="{y}" r="2.2" '
             f'fill="#FFE4A6" filter="url(#glow)"/>'
         )
 
-    # Warm golden decorative lantern
-    lx = width - 76
+    # Golden lantern
+    lx = width - 75
 
     lantern = f'''
-    <circle cx="{lx}" cy="421" r="58"
+    <circle cx="{lx}" cy="425" r="55"
       fill="url(#lanternGlow)"
       filter="url(#softGlow)"/>
 
     <g transform="translate({lx},424)" filter="url(#glow)">
 
-      <!-- Top handle -->
       <path d="M-7 -42 Q0 -61 7 -42"
         fill="none" stroke="#E8C18B" stroke-width="2.5"/>
 
-      <!-- Lantern roof -->
       <path d="M-13 -38 L13 -38 L19 -29
         L-19 -29 Z"
         fill="#59405D" stroke="#F2C88E"
         stroke-width="2"/>
 
-      <!-- Glass body -->
       <path d="M-13 -28 L13 -28 L16 12
         L-16 12 Z"
         fill="#5A3B4D" stroke="#F4CE93"
         stroke-width="2"/>
 
-      <!-- Golden glass light -->
       <path d="M-8 -23 L8 -23 L10 7
         L-10 7 Z"
         fill="#FFD98F"/>
@@ -570,82 +459,14 @@ def create_year_svg(year, days):
         Q10 -5 0 -18 Z"
         fill="#FFF2C6"/>
 
-      <!-- Base -->
       <path d="M-18 13 L18 13 L22 20
         L-22 20 Z"
         fill="#72513F" stroke="#EBC18D"
         stroke-width="2"/>
 
-      <!-- Decorative bottom -->
       <path d="M-10 20 L10 20 L7 25
         L-7 25 Z"
         fill="#A77A57"/>
-    </g>
-    '''
-
-
-    # Meadow plants and fireflies
-    plants = []
-
-    for i in range(55):
-        x = (i * 47 + 15) % width
-        y = 468 - (i % 4) * 7
-        size = 5 + (i % 4)
-
-        plants.append(
-            f'<path d="M{x} {y} q-9 -20 -4 -30 '
-            f'M{x} {y} q8 -17 13 -24" '
-            f'fill="none" stroke="#9C83B8" '
-            f'stroke-width="1.5" opacity="0.8"/>'
-        )
-
-        if i % 3 == 0:
-            plants.append(
-                flower(
-                    x, y-23, size,
-                    "#D79BEF", "#FFF0D5", 0.9
-                )
-            )
-
-    fireflies = []
-
-    for i in range(18):
-        x = (i * 67 + 35) % width
-        y = 375 + (i % 3) * 17
-
-        fireflies.append(
-            f'<circle cx="{x}" cy="{y}" r="2.2" '
-            f'fill="#FFD58D" filter="url(#glow)"/>'
-        )
-
-    # Detailed lantern
-    lx = width - 75
-
-    lantern = f'''
-    <circle cx="{lx}" cy="425" r="45"
-      fill="url(#lanternGlow)" filter="url(#softGlow)"/>
-
-    <g transform="translate({lx},424)" filter="url(#glow)">
-      <path d="M-10 -30 L10 -30 L15 8
-      L-15 8 Z" fill="#3B294A"
-      stroke="#D5A76E" stroke-width="2"/>
-
-      <path d="M-7 -25 L7 -25 L9 4
-      L-9 4 Z" fill="#FFD88F"/>
-
-      <path d="M-5 -30 Q0 -48 5 -30"
-      fill="none" stroke="#E9C18D" stroke-width="2"/>
-
-      <path d="M-14 9 L14 9 L18 15
-      L-18 15 Z" fill="#76513F"
-      stroke="#E8BF8B" stroke-width="1.5"/>
-
-      <path d="M-10 -33 L-7 -39 L7 -39
-      L10 -33 Z" fill="#61435C"
-      stroke="#E8BF8B" stroke-width="1.5"/>
-
-      <path d="M-4 -42 Q0 -52 4 -42"
-      fill="none" stroke="#E8BF8B" stroke-width="2"/>
     </g>
     '''
 
@@ -674,67 +495,4 @@ def create_year_svg(year, days):
       {''.join(fireflies)}
       {lantern}
 
-      </svg>'''
-
-
-
-
-os.makedirs("profile", exist_ok=True)
-
-year_links = []
-
-for year in range(START_YEAR, CURRENT_YEAR + 1):
-    days, total = fetch_year(year)
-
-    svg = create_year_svg(year, days)
-    filename = f"profile/contributions-{year}.svg"
-
-    with open(filename, "w", encoding="utf-8") as file:
-        file.write(svg)
-
-    year_links.append(
-        f'<a href="profile/contributions-{year}.svg">'
-        f'{year}</a>'
-    )
-
-    print(f"{year}: {total} contributions generated")
-
-# Current year's graph is shown by default.
-current_file = f"profile/contributions-{CURRENT_YEAR}.svg"
-
-with open(current_file, "r", encoding="utf-8") as file:
-    current_svg = file.read()
-
-with open("profile/contributions.svg", "w", encoding="utf-8") as file:
-    file.write(current_svg)
-
-# Update the year selector in README.
-readme_path = "README.md"
-start_marker = "<!-- CONTRIBUTION_YEARS_START -->"
-end_marker = "<!-- CONTRIBUTION_YEARS_END -->"
-
-with open(readme_path, "r", encoding="utf-8") as file:
-    readme = file.read()
-
-if start_marker in readme and end_marker in readme:
-    links = " &nbsp; | &nbsp; ".join(year_links)
-
-    section = (
-        start_marker + "\n"
-        + '<p align="center">' + links + '</p>\n'
-        + '<p align="center">'
-        + f'<img src="profile/contributions.svg" '
-        + 'width="100%" alt="Yearly Contribution Graph"/>'
-        + '</p>\n'
-        + end_marker
-    )
-
-    before, remainder = readme.split(start_marker, 1)
-    _, after = remainder.split(end_marker, 1)
-
-    with open(readme_path, "w", encoding="utf-8") as file:
-        file.write(before + section + after)
-else:
-    print("README year-selector markers not added yet.")
-
-print("Yearly contribution graphs generated successfully!")
+    </svg>'''
